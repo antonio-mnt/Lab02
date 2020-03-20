@@ -53,7 +53,9 @@ public class FXMLController {
     			txtResult.appendText(ne.getMessage());
     			return;
     		}
-    		txtResult.appendText("\nLa traduzione della parola aliena '"+array[0].toLowerCase()+"' è: "+traduzione+".");
+    		//txtResult.appendText("\nLa traduzione della parola aliena '"+array[0].toLowerCase()+"' è: "+traduzione+".");
+    		txtResult.appendText(traduzione);
+
     		
     	}else if(array.length == 2) {
     		

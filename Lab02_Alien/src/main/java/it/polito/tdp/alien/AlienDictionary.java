@@ -7,6 +7,7 @@ import java.util.List;
 public class AlienDictionary {
 	
 	private List<Word> dizionario = new ArrayList<>();
+	private List<WordEnhanced> dizionario2 = new ArrayList<>();
 	
 	public boolean controllaCaratteri(String s) {
 		
@@ -34,23 +35,37 @@ public class AlienDictionary {
 		String newAlienWord = alienWord.toLowerCase();
 		String newTranslation = translation.toLowerCase();
 		
-		for(Word w: this.dizionario) {
+		List<String> translations;
+		
+		/*for(Word w: this.dizionario) {
 			if(w.equals(newAlienWord)==true) {
 				w.setTranslation(newTranslation);
 				return;
 			}
+		}*/
+		
+		for(WordEnhanced we: this.dizionario2) {
+			if(we.equals(newAlienWord)==true) {
+				translations = new ArrayList(we.getTranslations());
+				translations.add(newTranslation);
+				we.setTranslations(translations);
+				return;
+			
+		}
 		}
 		
-		this.dizionario.add(new Word(newAlienWord,newTranslation));
+		translations = new ArrayList();
+	    translations.add(newTranslation);
+		this.dizionario2.add(new WordEnhanced(newAlienWord,translations));
 	}
 	
 	public String translateWord(String alienWord) {
 		
 		String newAlienWord = alienWord.toLowerCase();
 		
-		for(Word w: this.dizionario) {
-			if(w.equals(newAlienWord)==true) {
-				return w.getTranslation();
+		for(WordEnhanced we: this.dizionario2) {
+			if(we.equals(newAlienWord)==true) {
+				return we.toString();
 			}
 		}
 		
