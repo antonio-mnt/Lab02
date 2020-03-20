@@ -46,6 +46,11 @@ public class AlienDictionary {
 		
 		for(WordEnhanced we: this.dizionario2) {
 			if(we.equals(newAlienWord)==true) {
+				for(String t: we.getTranslations()) {
+					if(t.equals(newTranslation)) {
+						return;
+					}
+				}
 				translations = new ArrayList(we.getTranslations());
 				translations.add(newTranslation);
 				we.setTranslations(translations);
@@ -59,9 +64,75 @@ public class AlienDictionary {
 		this.dizionario2.add(new WordEnhanced(newAlienWord,translations));
 	}
 	
+	public int controllaPuntiInterrogativi(String a){
+		
+		int count = 0;
+		
+		for(int i = 0; i<a.length(); i++) {
+			int x = a.charAt(i);
+			if(x == 63) {
+				count++;
+			}
+		}
+		
+		return count;
+	}
+	
 	public String translateWord(String alienWord) {
 		
 		String newAlienWord = alienWord.toLowerCase();
+
+		if(controllaPuntiInterrogativi(newAlienWord) >= 2) {
+			throw new InvalidParameterException("\nLa parola aliena cercata può contenere al massimo un '?'.");
+		}else if(controllaPuntiInterrogativi(newAlienWord) == 1) {
+			
+			int x = newAlienWord.indexOf("?");
+			
+			if(x==0) {
+				int count = 0;
+				String s = "";
+				for(WordEnhanced we: this.dizionario2) {
+					if(we.containsSeconda(newAlienWord.substring(1))) {
+						count++;
+						s = we.toString();
+					}
+				}
+				if(count >= 2) {
+					throw new InvalidParameterException("\nNon è possibile risalire alla parola aliena cercata,\nne esistono "+count+" con la struttura inserita.");
+				}else if(count == 1){
+					return s;
+				}
+			}else if(x == (newAlienWord.length()-1)) {
+				int count = 0;
+				String s = "";
+				for(WordEnhanced we: this.dizionario2) {
+					if(we.containsPrima(newAlienWord.substring(0, newAlienWord.length()-1))) {
+						count++;
+						s = we.toString();
+					}
+				}
+				if(count >= 2) {
+					throw new InvalidParameterException("\nNon è possibile risalire alla parola aliena cercata,\nne esistono "+ count+"con la struttura inserita.");
+				}else if(count == 1){
+					return s;
+				}
+			}else {
+				int count = 0;
+				String s = "";
+				for(WordEnhanced we: this.dizionario2) {
+					if(we.contains(newAlienWord.substring(0,x), newAlienWord.substring(x+1),x)) {
+						count++;
+						s = we.toString();
+					}
+				}
+				if(count >= 2) {
+					throw new InvalidParameterException("\nNon è possibile risalire alla parola aliena cercata,\nne esistono "+count+" con la struttura inserita.");
+				}else if(count == 1){
+					return s;
+				}
+			}
+			
+		}
 		
 		for(WordEnhanced we: this.dizionario2) {
 			if(we.equals(newAlienWord)==true) {

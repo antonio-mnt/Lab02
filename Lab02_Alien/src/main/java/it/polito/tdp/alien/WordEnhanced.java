@@ -36,7 +36,31 @@ public class WordEnhanced {
 		else
 			return false;
 	}
+	
+	public boolean containsSeconda (String secondaParte) {
+		if(this.alienWord.substring(1).equals(secondaParte))
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean containsPrima (String secondaParte) {
+		if(this.alienWord.substring(0, this.alienWord.length()-1).equals(secondaParte))
+			return true;
+		else
+			return false;
+	}
+	
 
+	public boolean contains (String primaParte, String secondaParte, int x) {
+		if(this.alienWord.substring(0, x).equals(primaParte) && this.alienWord.substring(x+1).equals(secondaParte))
+			return true;
+		else
+			return false;
+	}
+
+	
+	
 	@Override
 	public String toString() {
 		

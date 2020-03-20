@@ -34,6 +34,7 @@ public class FXMLController {
     @FXML
     void doReset(ActionEvent event) {
     	txtResult.clear();
+    	txtInsert.clear();
     	txtResult.appendText("Welcome to Alien Dictionary v2019.");
     }
 
@@ -52,6 +53,8 @@ public class FXMLController {
     		}catch(NullPointerException ne) {
     			txtResult.appendText(ne.getMessage());
     			return;
+    		}catch(InvalidParameterException pe) {
+    			txtResult.appendText(pe.getMessage());
     		}
     		//txtResult.appendText("\nLa traduzione della parola aliena '"+array[0].toLowerCase()+"' è: "+traduzione+".");
     		txtResult.appendText(traduzione);
